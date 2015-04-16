@@ -14,6 +14,13 @@ var SpeechSynthesis = function() {
     exec(successCallback, null, "SpeechSynthesis", "startup", []);
 };
 
+SpeechSynthesis.prototype.init = function(callback) {
+    var successCallback = function(data) {
+        if(callback) callback(data);
+    };
+    exec(successCallback, null, "SpeechSynthesis", "startup", []);
+};
+
 SpeechSynthesis.prototype.speak = function(utterance) {
 	var successCallback = function(event) {
 		if (event.type === "start" && typeof utterance.onstart === "function") {
@@ -37,6 +44,13 @@ SpeechSynthesis.prototype.speak = function(utterance) {
 	};
 
     exec(successCallback, errorCallback, "SpeechSynthesis", "speak", [utterance]);
+};
+
+SpeechSynthesis.prototype.isLanguageAvailable = function(lang, callback) {
+    var successCallback = function(data) {
+        return callback(data);
+    };
+    exec(successCallback, null, "SpeechSynthesis", "isLanguageAvailable", [lang]);
 };
 
 SpeechSynthesis.prototype.cancel = function() {
